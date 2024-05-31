@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  flask_app:
+    build:
+      context: .
+      dockerfile: Dockerfile_flask
+    ports:
+      - "5000:5000"
+    networks:
+      - app-network
+
+  dash_app:
+    build:
+      context: .
+      dockerfile: Dockerfile_dash
+    ports:
+      - "8050:8050"
+    networks:
+      - app-network
+    depends_on:
+      - flask_app
+
+networks:
+  app-network:
+    driver: bridge
